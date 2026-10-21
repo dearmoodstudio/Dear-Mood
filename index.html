@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Dear Mood — 오늘의 기분에 어울리는 한 잔</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Noto+Sans+KR:wght@300;400;500;700&amp;family=Noto+Serif+KR:wght@500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+html{scroll-behavior:smooth}
+a{color:inherit}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width:100%;box-sizing:border-box;background:#FAF6EE;color:#4A3B2E;font-family:'Noto Sans KR',sans-serif;font-size:16px;line-height:1.7">
+
+  <!-- HERO -->
+  <section style="max-width:1120px;margin:0 auto;padding:40px 20px 72px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:40px;align-items:center">
+    <div style="flex:1 1 340px;min-width:0;display:flex;flex-direction:column;gap:20px">
+      <p style="margin:0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(34px,6vw,60px);line-height:1.1;color:{{accent}}">Dear Mood,</p>
+      <h1 style="margin:0;font-size:clamp(28px,4.6vw,46px);line-height:1.3;font-weight:500">오늘의 기분에<br>어울리는 한 잔.</h1>
+      <p style="margin:0;font-size:17px;color:#6F5E4E">어떤 하루를 보내고 있나요?<br>지금 당신에게 어울리는 차를 발견해 보세요.</p>
+      <div style="padding-top:8px">
+        <a href="#mood" style="display:inline-flex;align-items:center;min-height:52px;padding:0 28px;border-radius:999px;background:#4A3B2E;color:#FAF6EE;text-decoration:none;font-weight:500;font-size:16px">오늘의 무드 선택하기 →</a>
+      </div>
+    </div>
+    <div style="flex:1 1 300px;min-width:0;min-height:380px;position:relative;overflow:hidden;border-radius:200px 200px 24px 24px;background:#DCCBAE">
+      <img src="./assets/22361a5c61352800fb5a2bd1a89fa2a3.jpg" alt="창가의 자연광이 드리운 리넨 위의 찻잔" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block">
+    </div>
+  </section>
+
+  <!-- MOOD -->
+  <section id="mood" style="background:#F2EADB;padding:72px 0">
+    <div style="max-width:1120px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:32px">
+      <div style="text-align:center">
+        <p style="margin:0 0 8px;font-size:13px;letter-spacing:.14em;color:{{accent}}">CHOOSE YOUR MOOD</p>
+        <h2 style="margin:0;font-size:clamp(24px,3.6vw,34px);font-weight:500">오늘, 어떤 기분이세요?</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px">
+        <sc-for list="{{moods}}" as="m" hint-placeholder-count="4">
+          <button type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" style="all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;background:#FFFDF8;border-radius:20px;overflow:hidden;border:2px solid {{m.border}}">
+            <span style="display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;background:{{m.bg}};position:relative;overflow:hidden">
+              <sc-if value="{{m.hasImg}}" hint-placeholder-val="{{ false }}">
+                <img src="{{m.img}}" alt="{{m.alt}}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block">
+              </sc-if>
+              <sc-if value="{{m.noImg}}" hint-placeholder-val="{{ true }}">
+                <span style="width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(74,59,46,.35);display:block"></span>
+              </sc-if>
+            </span>
+            <span style="display:flex;flex-direction:column;gap:4px;padding:16px">
+              <span style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;line-height:1.15">{{m.title}}</span>
+              <span style="font-size:14px;color:#6F5E4E;line-height:1.5">{{m.desc}}</span>
+            </span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNAL -->
+  <section id="journal" style="background:#FAF6EE;padding:40px 0 0">
+    <div style="max-width:1120px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:14px">
+      <div style="display:flex;flex-wrap:wrap;background:#FFFDF8;border:1px solid #E6D8C0;border-radius:20px;overflow:hidden">
+        <div style="flex:1.25 1 340px;min-width:0;min-height:clamp(150px,34vw,230px);position:relative;overflow:hidden;background:linear-gradient(160deg,#EADFCB,#D3BF9F);display:flex;align-items:center;justify-content:center">
+          <sc-if value="{{journal.hasImg}}" hint-placeholder-val="{{ false }}">
+            <img src="{{journal.img}}" alt="{{journal.alt}}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block">
+          </sc-if>
+          <sc-if value="{{journal.noImg}}" hint-placeholder-val="{{ true }}">
+            <span style="font-size:12px;color:#5E4E3F;text-align:center;padding:0 24px">[이미지 영역 · 따뜻한 차 한 잔과 다크 초콜릿]</span>
+          </sc-if>
+        </div>
+        <div style="flex:1 1 320px;min-width:0;box-sizing:border-box;padding:24px 28px;display:flex;flex-direction:column;gap:10px;align-items:flex-start;justify-content:center">
+          <span style="font-size:12px;font-weight:500;letter-spacing:.06em;color:{{accent}}">{{journal.cardLabel}}</span>
+          <h3 style="margin:0;font-family:'Noto Serif KR','Cormorant Garamond',serif;font-weight:500;font-size:clamp(20px,2.4vw,26px);line-height:1.45;word-break:keep-all">{{journal.title}}</h3>
+          <p style="margin:0;font-size:15px;line-height:1.8;color:#6F5E4E;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden">{{journal.preview}}</p>
+          <button type="button" onClick="{{toggleJournal}}" aria-expanded="{{journalOpen}}" style="margin-top:2px;min-height:44px;padding:10px 0 6px;border:0;border-bottom:1px solid #4A3B2E;border-radius:0;background:transparent;color:#4A3B2E;font-size:14px;font-weight:500;letter-spacing:.02em;font-family:inherit;cursor:pointer">{{journalBtn}}</button>
+        </div>
+      </div>
+      <sc-if value="{{journalOpen}}" hint-placeholder-val="{{ false }}">
+        <article id="journal-article" style="max-width:720px;width:100%;box-sizing:border-box;margin:18px auto 0;background:#FFFDF8;border:1px solid #E6D8C0;border-radius:24px;padding:clamp(32px,6vw,64px) clamp(22px,5vw,56px);display:flex;flex-direction:column;gap:22px">
+          <span style="font-size:13px;letter-spacing:.14em;color:{{accent}}">{{journal.category}} | DEAR MOOD JOURNAL</span>
+          <h2 style="margin:0 0 12px;font-family:'Noto Serif KR','Cormorant Garamond',serif;font-weight:500;font-size:clamp(26px,4vw,36px);line-height:1.45;word-break:keep-all">{{journal.title}}</h2>
+          <sc-if value="{{journalNotice}}" hint-placeholder-val="{{ true }}">
+            <p style="margin:-6px 0 6px;font-size:13px;line-height:1.7;color:#6F5E4E">※ 차 이름을 누르면 판매처로 연결돼요. 일부는 제휴 링크라서 구매 시 Dear Mood가 수수료를 받을 수 있어요.</p>
+          </sc-if>
+          <sc-for list="{{journalBlocks}}" as="b" hint-placeholder-count="6">
+            <sc-if value="{{b.isP}}" hint-placeholder-val="{{ true }}">
+              <p style="margin:0;font-size:17px;line-height:2;word-break:keep-all">{{b.text}}</p>
+            </sc-if>
+            <sc-if value="{{b.isItem}}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:30px;padding-top:30px;border-top:1px solid #E6D8C0;display:flex;flex-direction:column;gap:6px">
+                <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:26px;color:{{accent}}">{{b.no}}</span>
+                <h3 style="margin:0;font-family:'Noto Serif KR','Cormorant Garamond',serif;font-weight:500;font-size:22px;line-height:1.5"><sc-if value="{{b.hasUrl}}" hint-placeholder-val="{{ true }}"><a href="{{b.url}}" target="_blank" rel="noopener sponsored" onClick="{{b.click}}" style="color:inherit;text-decoration:underline;text-decoration-color:#CDBA9A;text-underline-offset:5px">{{b.title}} <span style="font-family:'Noto Sans KR',sans-serif;font-size:16px;color:{{accent}}">→</span></a></sc-if><sc-if value="{{b.noUrl}}" hint-placeholder-val="{{ false }}">{{b.title}}</sc-if></h3>
+                <p style="margin:0;font-size:15px;color:#6F5E4E">{{b.sub}}</p>
+              </div>
+            </sc-if>
+            <sc-if value="{{b.isTaste}}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;font-size:16px;line-height:1.9;padding:14px 18px;background:#F2EADB;border-left:3px solid {{accent}};border-radius:0 12px 12px 0;word-break:keep-all"><b style="font-weight:500">추천하는 취향</b> · {{b.text}}</p>
+            </sc-if>
+            <sc-if value="{{b.isHead}}" hint-placeholder-val="{{ false }}">
+              <h3 style="margin:30px 0 0;padding-top:30px;border-top:1px solid #E6D8C0;font-family:'Noto Serif KR','Cormorant Garamond',serif;font-weight:500;font-size:22px;line-height:1.5">{{b.text}}</h3>
+            </sc-if>
+            <sc-if value="{{b.isImg}}" hint-placeholder-val="{{ false }}">
+              <div style="width:100%;max-width:{{b.maxw}};aspect-ratio:{{b.ratio}};margin:10px auto;border-radius:16px;overflow:hidden">
+                <img src="{{b.src}}" alt="{{b.alt}}" style="width:100%;height:100%;object-fit:cover;object-position:50% 62%;display:block;mix-blend-mode:{{b.blend}}">
+              </div>
+            </sc-if>
+            <sc-if value="{{b.isClose}}" hint-placeholder-val="{{ false }}">
+              <p style="margin:14px 0 0;font-size:17px;line-height:1.9;color:#6F5E4E;text-align:right;font-family:'Noto Serif KR','Cormorant Garamond',serif">{{b.text}}</p>
+            </sc-if>
+          </sc-for>
+          <button type="button" onClick="{{toggleJournal}}" style="align-self:center;margin-top:8px;min-height:48px;padding:0 26px;border:1px solid #CDBA9A;border-radius:999px;background:transparent;color:#4A3B2E;font-size:15px;font-family:inherit;cursor:pointer">이야기 닫기 ↑</button>
+        </article>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- LETTER + TEA -->
+  <section id="result" style="padding:72px 0 24px">
+    <div style="max-width:1120px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:48px">
+
+      <sc-if value="{{noMood}}" hint-placeholder-val="{{ false }}">
+        <p style="margin:0;text-align:center;color:#6F5E4E;padding:32px 0">무드를 선택하면 오늘의 편지와 어울리는 차가 이곳에 나타나요.</p>
+      </sc-if>
+
+      <sc-if value="{{hasMood}}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:48px">
+          <sc-if value="{{showLetter}}" hint-placeholder-val="{{ false }}">
+            <div style="max-width:560px;width:100%;box-sizing:border-box;margin:0 auto;background:#FFFDF8;border:1px solid #E6D8C0;border-radius:6px;box-shadow:0 10px 30px rgba(74,59,46,.08);padding:40px 32px;display:flex;flex-direction:column;gap:18px">
+              <span style="font-size:12px;letter-spacing:.14em;color:{{accent}}">DEAR LETTER · {{cur.upper}}</span>
+              <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:34px;line-height:1.1">Dear You,</span>
+              <p style="margin:0;font-size:18px;line-height:1.95;white-space:pre-line">{{cur.letter}}</p>
+              <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:#6F5E4E;align-self:flex-end">— Dear Mood</span>
+            </div>
+          </sc-if>
+
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="text-align:center">
+              <p style="margin:0 0 6px;font-size:13px;letter-spacing:.14em;color:{{accent}}">TEA RECOMMENDATION</p>
+              <h2 style="margin:0;font-size:clamp(22px,3.2vw,30px);font-weight:500">{{cur.title}}에 어울리는 차</h2>
+            </div>
+            <p style="margin:0 auto;max-width:640px;text-align:center;font-size:14px;color:#6F5E4E;background:#F2EADB;border-radius:12px;padding:12px 16px">아래 차는 차 종류를 활용한 <b>샘플 콘텐츠</b>입니다. 실제 제품·가격·판매처는 확정 후 교체됩니다.</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;max-width:880px;width:100%;margin:0 auto">
+              <sc-for list="{{products}}" as="p" hint-placeholder-count="2">
+                <article style="display:flex;flex-direction:column;background:#FFFDF8;border:1px solid #E6D8C0;border-radius:20px;overflow:hidden">
+                  <div style="aspect-ratio:4/3;background:{{p.bg}};position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                    <sc-if value="{{p.hasImg}}" hint-placeholder-val="{{ false }}">
+                      <img src="{{p.img}}" alt="{{p.alt}}" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block">
+                    </sc-if>
+                    <sc-if value="{{p.noImg}}" hint-placeholder-val="{{ true }}">
+                      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+                        <span style="width:56px;height:56px;border-radius:50%;border:1.5px solid rgba(74,59,46,.35);display:block"></span>
+                        <span style="font-size:12px;color:#5E4E3F">[제품 이미지 · 샘플]</span>
+                      </div>
+                    </sc-if>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:10px;padding:20px">
+                    <span style="font-size:12px;letter-spacing:.1em;color:{{accent}}">{{p.type}} · SAMPLE</span>
+                    <span style="font-size:14px;color:#6F5E4E">{{p.brand}}</span>
+                    <span style="font-family:'Cormorant Garamond','Noto Sans KR',serif;font-size:24px;font-weight:600;line-height:1.25">{{p.name}}<span style="margin-left:6px;font-family:'Noto Sans KR',sans-serif;font-size:15px;font-weight:300">{{p.sizeText}}</span></span>
+                    <p style="margin:0;font-size:15px"><b style="font-weight:500">향과 맛</b> · {{p.flavor}}</p>
+                    <p style="margin:0;font-size:15px"><b style="font-weight:500">가격</b> · {{p.priceText}}</p>
+                    <sc-if value="{{p.open}}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-direction:column;gap:8px;border-top:1px solid #E6D8C0;padding-top:12px;font-size:15px">
+                        <sc-if value="{{p.showCaffeine}}" hint-placeholder-val="{{ true }}">
+                          <p style="margin:0"><b style="font-weight:500">카페인</b> · {{p.caffeineText}}</p>
+                        </sc-if>
+                        <p style="margin:0"><b style="font-weight:500">추천 이유</b> · {{p.reason}}</p>
+                      </div>
+                    </sc-if>
+                    <button type="button" onClick="{{p.toggle}}" aria-expanded="{{p.open}}" style="min-height:44px;border:1px solid #CDBA9A;background:transparent;color:#4A3B2E;border-radius:999px;font-size:15px;cursor:pointer">{{p.toggleLabel}}</button>
+                    <sc-if value="{{p.hasUrl}}" hint-placeholder-val="{{ false }}">
+                      <a href="{{p.url}}" target="_blank" rel="noopener sponsored" onClick="{{p.clickRetailer}}" style="display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:999px;background:#4A3B2E;color:#FAF6EE;text-decoration:none;font-weight:500;font-size:15px">판매처에서 제품 보기 →</a>
+                    </sc-if>
+                    <sc-if value="{{p.showAffiliate}}" hint-placeholder-val="{{ false }}">
+                      <p style="margin:0;font-size:12px;line-height:1.6;color:#6F5E4E;text-align:center">제휴 링크 · 구매 시 Dear Mood가 수수료를 받을 수 있어요.</p>
+                    </sc-if>
+                    <sc-if value="{{p.noUrl}}" hint-placeholder-val="{{ true }}">
+                      <button type="button" disabled="" style="min-height:48px;border:1px dashed #CDBA9A;background:#F2EADB;color:#6F5E4E;border-radius:999px;font-size:15px;cursor:not-allowed">판매처 링크 준비 중</button>
+                    </sc-if>
+                  </div>
+                </article>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section style="max-width:1120px;margin:0 auto;padding:72px 20px;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:32px 64px">
+    <div style="flex:1 1 260px;min-width:0">
+      <p style="margin:0 0 8px;font-size:13px;letter-spacing:.14em;color:{{accent}}">ABOUT</p>
+      <h2 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,48px);font-weight:600;line-height:1.1">About<br>Dear Mood</h2>
+    </div>
+    <div style="flex:2 1 340px;min-width:0;display:flex;flex-direction:column;gap:16px;font-size:17px;line-height:1.9">
+      <p style="margin:0">Dear Mood는 오늘의 기분과 취향에 맞는 차를 발견하는 공간입니다.</p>
+      <p style="margin:0">익숙한 하루에 작은 새로운 경험을 더할 수 있도록, 다양한 브랜드의 차와 짧은 메시지를 큐레이션합니다.</p>
+      <p style="margin:0">좋은 차 한 잔을 고르는 일이 조금 더 쉽고 즐거워지기를 바랍니다.</p>
+    </div>
+  </section>
+
+  <!-- SIGNUP -->
+  <section id="signup" style="background:#F2EADB;padding:72px 0">
+    <div style="max-width:640px;margin:0 auto;padding:0 20px;box-sizing:border-box">
+      <div style="background:#FFFDF8;border:1px solid #E6D8C0;border-radius:24px;box-shadow:0 10px 30px rgba(74,59,46,.08);padding:36px 24px;display:flex;flex-direction:column;gap:22px">
+        <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px">
+          <span style="font-size:13px;letter-spacing:.14em;color:{{accent}}">DEAR MOOD · STAY IN TOUCH</span>
+          <h2 style="margin:0;font-size:clamp(24px,3.6vw,32px);font-weight:500;line-height:1.35;word-break:keep-all"><span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:500;font-size:1.2em">Dear Mood</span>를 가장 먼저 만나보세요.</h2>
+          <p style="margin:0;font-size:16px;color:#6F5E4E;line-height:1.8">오늘의 기분에 어울리는 차를 발견하는 작은 즐거움.<br>서비스가 시작되면 이메일로 알려드릴게요.</p>
+        </div>
+
+        <a href="{{signupUrl}}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;width:100%;box-sizing:border-box;min-height:56px;padding:0 24px;border-radius:999px;background:#4A3B2E;color:#FAF6EE;text-decoration:none;font-size:17px;font-weight:500">오픈 소식 받기 →</a>
+        <p style="margin:0;font-size:13px;line-height:1.7;color:#6F5E4E;text-align:center">버튼을 누르면 신청 화면(Google Forms)이 새 탭으로 열려요.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#4A3B2E;color:#EDE3D0;padding:56px 0 40px">
+    <div style="max-width:1120px;margin:0 auto;padding:0 20px;box-sizing:border-box;display:flex;flex-direction:column;gap:28px">
+      <div style="display:flex;flex-wrap:wrap;gap:24px 48px;justify-content:space-between">
+        <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600">Dear Mood</span>
+          <span style="font-size:14px">매일 아침, 당신에게 보내는 작은 선물.<br>오늘의 기분에 어울리는 차를 소개하는 티 큐레이션입니다.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;font-size:14px">
+          <span>문의 · <a href="mailto:emang0406@gmail.com" style="color:inherit;text-decoration:underline">emang0406@gmail.com</a></span>
+          <span>[개인정보처리방침] · [이용약관]</span>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(237,227,208,.3);padding-top:20px;display:flex;flex-direction:column;gap:8px;font-size:13px;line-height:1.7">
+        <span><b style="font-weight:500">제휴 링크 안내</b> · 제휴 링크가 적용된 판매처 링크를 통해 구매하시면 Dear Mood가 수수료를 받을 수 있습니다. 구매 금액은 달라지지 않습니다.</span>
+        <span>Dear Mood는 차를 직접 제조·판매하지 않으며, 소개하는 차는 일반식품입니다. 구매와 배송은 각 판매처에서 이루어집니다.</span>
+        <span>© Dear Mood</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#5E6E52","options":["#5E6E52","#7A5C3E","#4A3B2E"]},"startMood":{"editor":"enum","default":"soft","options":["soft","fresh","work","evening","none"]}}'>
+/* ───────── 1) GA4 이벤트 (분리된 영역) ─────────
+   GA4가 연결되기 전까지는 아무 것도 전송하지 않습니다.
+   연동 시: GA4.enabled = true 로 바꾸고, 페이지에 gtag 스니펫을 추가하세요.
+   이벤트: mood_select / product_view / retailer_click */
+const GA4 = { enabled: false, measurementId: '' };
+function track(name, params) {
+  if (GA4.enabled && typeof window.gtag === 'function') window.gtag('event', name, params);
+}
+
+/* ───────── 2) 무드 데이터 ───────── */
+const MOODS = [
+  { id: 'soft', title: 'Soft Morning', desc: '오늘은 천천히 시작하고 싶어요', bg: 'linear-gradient(160deg,#F1E7D3,#E2D0B0)', img: './assets/9d04c4eb817a303f138923515d2262e0.jpg', alt: '찻잔에 따뜻한 차가 따라지는 모습',
+    letter: '모든 순간을 서두를 필요는 없어요.\n오늘의 첫 잔은 조금 천천히 즐겨보세요.' },
+  { id: 'fresh', title: 'Fresh Mood', desc: '산뜻한 향이 끌리는 날이에요', bg: 'linear-gradient(160deg,#E3E9D4,#C9D5B5)', img: './assets/56620b958459fb14166e560ac932322e.jpg', alt: '귤과 올리브 잎이 놓인 접시 위의 찻잔',
+    letter: '익숙한 하루에도 작은 변화는 필요하니까요.\n오늘은 새로운 향을 골라보는 건 어떨까요?' },
+  { id: 'work', title: 'Work Time', desc: '일할 때 곁에 둘 차가 필요해요', bg: 'linear-gradient(160deg,#E6D6BF,#CDB694)', img: './assets/80521d50c37880572b0ac7d9adefe110.jpg', alt: '책상 위 노트북 옆에 놓인 찻잔',
+    letter: '해야 할 일들이 쌓여 있는 날.\n책상 위 좋아하는 차 한 잔부터 준비해 보세요.' },
+  { id: 'evening', title: 'Evening Ritual', desc: '오늘 하루를 조용히 마무리하고 싶어요', bg: 'linear-gradient(160deg,#DCCDBB,#BFAA92)', img: './assets/69fd97e2c979232364a0599279f40318.jpg', alt: '촛불 곁에 놓인 따뜻한 차 한 잔',
+    letter: '오늘도 여러 순간을 지나왔네요.\n이제는 나만의 시간을 즐겨보세요.' }
+];
+
+/* ───────── 3) 상품 데이터 (실제 상품으로 교체하는 곳) ─────────
+   brand/name/price/caffeine/url 이 null 이면 샘플 표시, url 이 있으면 판매처 버튼이 활성화됩니다.
+   caffeine 은 제품 라벨로 확인된 정보만 입력하세요. affiliate: 제휴 링크 여부. */
+const PRODUCTS = [
+  { id: 'soft-1', mood: 'soft', img: './assets/f1facf43145af264fc6fcbb0b53cb277.jpg', alt: '흰 찻잔 속에서 꽃이 피어나는 모양의 차', type: '백차', size: '80g', brand: 'Delphic', name: null, price: '₩42,000', caffeine: null, hideCaffeine: true, url: 'https://delphic.kr/premiumtea/?idx=17', affiliate: false,
+    flavor: '은은한 꽃향과 가벼운 단맛, 깔끔한 끝맛', reason: '향과 맛이 가볍고 부드러워 아침 첫 잔으로 천천히 마시기 좋은 스타일이에요.' },
+  { id: 'soft-2', mood: 'soft', img: './assets/8002319de07ec76d5839aec52e7c3bbd.jpg', alt: '말린 베리와 허브, 잎이 섞인 블렌딩 티 찻잎', type: '부드러운 블렌딩 티', size: '50g', brand: '오설록', name: '벚꽃향 가득한 올레', price: '₩21,600', caffeine: null, hideCaffeine: true, url: 'https://www.osulloc.com/kr/ko/shop/item/teashop/17063', affiliate: false,
+    flavor: '세콤달콤한 체리 향', reason: '자극이 적은 향 위주의 블렌드로, 조용한 아침 시간에 어울려요.' },
+  { id: 'fresh-1', mood: 'fresh', img: './assets/3ff8ae638d89b56dca436bc15f86f1b2.jpg', alt: '흰 그릇에 담긴 말린 민트 찻잎', type: '페퍼민트', size: '42g', brand: 'Harney & Sons', name: null, price: '₩31,400', caffeine: null, hideCaffeine: true, url: 'https://www.coupang.com/vp/products/6733351828?itemId=24084736261&vendorItemId=95574791643&q=%ED%95%98%EB%8B%88%EC%95%A4%EC%86%90%EC%8A%A4+%ED%8E%98%ED%8D%BC%EB%AF%BC%ED%8A%B8+%EC%9E%8E%EC%B0%A8&searchId=af2aa6604025156&sourceType=search&rank=4&itemsCount=60&searchRank=4&traceId=mveilxp3', affiliate: true,
+    flavor: '청량한 민트 향과 시원한 끝맛', reason: '또렷한 향이 특징이라 산뜻한 향을 찾는 날 따뜻하게도, 차갑게도 즐기기 좋아요.' },
+  { id: 'fresh-2', mood: 'fresh', img: './assets/3e004613af1eb534d026059d9a721f5e.jpg', alt: '흰 그릇에 담긴 말린 과일과 레몬그라스, 꽃잎이 섞인 블렌딩 티', type: '시트러스 블렌딩 티', size: '100g', brand: 'TWININGS', name: null, price: '₩25,850', caffeine: null, hideCaffeine: true, url: 'https://www.coupang.com/vp/products/6525026236?itemId=29274005438&vendorItemId=96190957418&q=%ED%8A%B8%EC%99%80%EC%9D%B4%EB%8B%9D+%EB%A0%88%EC%9D%B4%EB%94%94%EA%B7%B8%EB%A0%88%EC%9D%B4&searchId=36945efc2111433&sourceType=search&rank=17&itemsCount=60&searchRank=17&traceId=mveigqgv', affiliate: true,
+    flavor: '베르가못과 레몬, 달콤한 오렌지 향이 어우러진 라이트한 블랙티', reason: '과일 향이 중심이라 새로운 향을 시도해 보고 싶은 날 어울려요.' },
+  { id: 'work-1', mood: 'work', img: './assets/0037535ac8b9aa24dec657d55fa01c10.jpg', alt: '흰 그릇에 담긴 검은 홍차 찻잎', type: '얼그레이', size: '35g', brand: '에이씨퍼치스', name: null, price: '₩27,000', caffeine: null, hideCaffeine: true, url: 'https://www.coupang.com/vp/products/8926193187?itemId=26089877078&vendorItemId=93070676205', affiliate: false,
+    flavor: '베르가못의 또렷한 향과 깊은 홍차 맛', reason: '향이 분명해 책상 위에 두고 천천히 마시기 좋은 클래식한 선택이에요.' },
+  { id: 'work-2', mood: 'work', img: './assets/bc3dcac592449e549782b23414e804f4.jpg', alt: '흰 그릇에 담긴 진한 갈색 찻잎', type: '호지차', size: '70g', brand: 'Orteas', name: null, price: '₩35,000', caffeine: null, hideCaffeine: true, url: 'https://orteas.kr/hojitea/?idx=24', affiliate: false,
+    flavor: '봄·가을 녹차를 블렌딩해 볶은 산뜻한 향과 순하고 고소한 맛', reason: '맛이 담백하고 고소해 오래 곁에 두고 마시기 편한 스타일이에요.' },
+  { id: 'evening-1', mood: 'evening', order: 2, img: './assets/d4f2b8023d29672c0673432aef564115.jpg', alt: '둥글게 쌁인 말린 허브 찻잎', type: '블렌딩 티', size: '30g', brand: '8APM', name: '흑하랑상추 티', price: '₩15,200', caffeine: '무카페인', url: 'https://www.coupang.com/vp/products/8360333819?itemId=24160437626&vendorItemId=91179032110', affiliate: false,
+    flavor: '대추의 단맛과 원지의 쌀쌀한 맛에 참당귀를 더한 블렌드', reason: '단맛과 쌀쌀한 맛이 어우러져 저녁 시간에 천천히 마시기 좋은 스타일이에요.' },
+  { id: 'evening-2', mood: 'evening', order: 1, img: './assets/4ab9dbbc901c09a2d7c7263fa74541ea.jpg', alt: '흰 그릇에 담긴 캐모마일 꽃과 장미 꽃잎이 섞인 블렌딩 티', type: '캐모마일 블렌딩 티', size: '40g', brand: 'Harney & Sons', name: null, price: '₩22,000', caffeine: '무카페인', url: 'https://www.coupang.com/vp/products/6264361847?itemId=24260074379&vendorItemId=91276786449&q=%ED%95%98%EB%8B%88%EC%95%A4%EC%86%90%EC%A6%88+%EC%B9%B4%EB%AA%A8%EB%A7%88%EC%9D%BC&searchId=5dacb46e993197&sourceType=search&rank=4&itemsCount=60&searchRank=4&traceId=mves3ews', affiliate: false,
+    flavor: '사과를 닮은 달콤한 꽃향에 은은한 장미 향이 더해진 맛', reason: '꽃향이 포근하고 부드러워 하루를 마무리하는 나만의 시간에 어울려요.' }
+];
+const PRODUCT_BG = {
+  soft: 'linear-gradient(160deg,#F4EBD9,#E6D6B8)', fresh: 'linear-gradient(160deg,#E8EEDC,#D3DEC0)',
+  work: 'linear-gradient(160deg,#EBDDC8,#D6C0A0)', evening: 'linear-gradient(160deg,#E3D6C6,#C9B59D)'
+};
+
+/* ───────── 4) 이메일 사전 신청 설정 (분리된 영역) ─────────
+   신청은 Google Forms 로 받습니다. 폼 주소를 바꾸려면 아래 formUrl 만 수정하세요.
+   별도의 이메일 저장 시스템은 없으며, 개인정보 수집·이용 동의 문구는 Google Form 안에서 안내하세요. */
+/* Dear Letter 카드 표시 여부 (false = 화면에서 숨김, 편지 문구 데이터는 MOODS 에 그대로 남아 있습니다) */
+const SHOW_LETTER = false;
+const SIGNUP = { formUrl: 'https://forms.gle/kMFACxaS19J7nrSH6' };
+
+/* ───────── 5) Journal 아티클 데이터 (분리된 영역) ─────────
+   t: p=문단, item=번호 제목, taste=추천하는 취향, head=소제목, close=맺음말. img 에 이미지 주소를 넣으면 대표 이미지가 표시됩니다. */
+const JOURNAL = {
+  intro: '차 한 잔을 조금 더 재미있게 즐기는 방법',
+  category: 'TEA & TREAT', cardLabel: '디어무드 저널 · 차와 디저트',
+  title: '티와 다크 초콜릿, 의외로 잘 어울리는 조합',
+  preview: '다크 초콜릿 먹을 때 뭐 마셔? 보통 커피부터 떠올리지 않아? 알고 보니 차와 다크 초콜릿도 꽤 근사한 조합이 될 수 있대.',
+  img: './assets/2aa8c90bd94678a8dbbf03153711a984.jpg', alt: '찻잔에 담긴 홍차와 오렌지 슬라이스를 올린 초콜릿 케이크',
+  blocks: [
+    { t: 'p', text: '혹시 다크 초콜릿 좋아해? 난 그 특유의 쌉싸름한 맛이 꽤 매력적이라고 생각해. 커피랑 먹는 건 익숙한데, 차와 함께 먹는 건 생각해 본 적 있어?' },
+    { t: 'p', text: '사실 차와 초콜릿도 꽤 근사한 짝꿍이 될 수 있대. 초콜릿의 쌉싸름한 맛이 더 두드러지기도 하고, 차에 숨어 있던 과일향이 새롭게 느껴지기도 하는 거지.' },
+    { t: 'img', src: './assets/080db0782337687337b116e64fa01a2a.jpg', alt: '초콜릿 조각과 티 인퓨저, 찻잔이 놓인 테이블', ratio: '16/10' },
+    { t: 'p', text: '재미있는 건 둘의 공통점이야. 찻잎과 카카오 콩은 모두 자라는 지역의 기후와 토양, 가공 방식에 따라 맛이 달라져. 와인처럼 산지와 향을 비교하며 즐길 수 있다는 얘기지.' },
+    { t: 'p', text: '그런데 아무 차나 다크 초콜릿과 잘 어울리는 건 아니야. 카카오의 진한 맛에 차의 향이 묻힐 수도 있고, 반대로 쓴맛이 너무 강해질 수도 있거든.' },
+    { t: 'p', text: '그래서 준비했어. 다크 초콜릿과 함께 마셔보면 재미있을 세 가지 차!' },
+    { t: 'item', no: '01', productId: 'fresh-2', title: '트와이닝 레이디 그레이', sub: '상큼한 오렌지 향과 쌉싸름한 카카오의 만남' },
+    { t: 'p', text: '얼그레이는 알아도 레이디 그레이는 처음 들어보는 사람 있어?' },
+    { t: 'p', text: '트와이닝 레이디 그레이는 홍차에 오렌지와 레몬 껍질을 더한 블렌딩 티야. 일반적인 얼그레이보다 산뜻하고 과일향이 두드러지는 게 특징이지.' },
+    { t: 'p', text: '여기에 다크 초콜릿을 곁들이면 어떨까? 진한 카카오 풍미 사이로 상큼한 시트러스 향이 더해지는 조합을 기대해 볼 수 있어.' },
+    { t: 'p', text: '오렌지 다크 초콜릿을 좋아한다면 특히 관심이 갈 만한 조합이야.' },
+    { t: 'img', src: './assets/b9c4bc58713b06cbefd5ed14a5892a50.jpg', alt: '건조 오렌지 조각을 올린 층층이 초콜릿 디저트', ratio: '1/1', maxw: '400px', blend: 'multiply' },
+    { t: 'taste', text: '진한 초콜릿은 좋지만, 과일향으로 조금 산뜻하게 즐기고 싶은 사람.' },
+    { t: 'item', no: '02', productId: 'fresh-1', title: '하니앤손스 페퍼민트', sub: '민트 초콜릿 좋아하는 사람, 여기 모여!' },
+    { t: 'p', text: '민트초코파야? 반민초파야? 이 조합은 호불호가 조금 갈릴 것 같아.' },
+    { t: 'p', text: '페퍼민트 티는 특유의 청량하고 시원한 향이 매력이야. 여기에 다크 초콜릿을 곁들이면 익숙한 민트 초콜릿을 조금 다른 방식으로 즐기는 셈이지.' },
+    { t: 'p', text: '특히 페퍼민트의 시원한 향과 진한 카카오 풍미가 서로 대비되는 게 이 조합의 포인트야.' },
+    { t: 'p', text: '참고로 순수 페퍼민트 허브티는 카페인이 없다는 것도 알아두면 좋아.' },
+    { t: 'img', src: './assets/6f3810845495d7219bd3e7327a56d30d.jpg', alt: '민트 잎이 놓인 다크 초콜릿 조각', ratio: '3/2' },
+    { t: 'taste', text: '민트 초콜릿을 좋아하거나, 입안에 남는 청량한 향을 즐기는 사람.' },
+    { t: 'item', no: '03', productId: 'work-1', title: '얼그레이', sub: '클래식한 조합에는 이유가 있지' },
+    { t: 'p', text: '얼그레이의 매력은 뭐니 뭐니 해도 베르가모트 향이야. 감귤류 특유의 산뜻하면서도 살짝 쌉싸름한 향이 홍차에 더해져 있거든.' },
+    { t: 'p', text: '이 향이 다크 초콜릿의 묵직한 카카오 풍미와 만나는 거야.' },
+    { t: 'p', text: '앞서 소개한 레이디 그레이가 오렌지와 레몬의 밝은 과일향에 가깝다면, 얼그레이는 베르가모트 특유의 향긋함이 중심이라고 생각하면 이해하기 쉬워.' },
+    { t: 'img', src: './assets/0387a606d91f4d06dbf0a6bea7427169.jpg', alt: '얼그레이 티가 들어간 다크 초콜릿과 찻잎', ratio: '1/1', maxw: '400px', blend: 'multiply' },
+    { t: 'taste', text: '시트러스 향을 좋아하지만 홍차 특유의 깊은 풍미도 즐기고 싶은 사람.' },
+    { t: 'head', text: '차와 초콜릿, 이렇게 먹어봐!' },
+    { t: 'p', text: '그냥 번갈아 먹어도 좋지만, 조금 더 재미있게 즐기는 방법이 있어.' },
+    { t: 'p', text: '먼저 다크 초콜릿을 작게 한 조각 베어 물고 입안에서 천천히 녹여봐. 그런 다음 따뜻한 차를 한 모금 마시는 거야.' },
+    { t: 'p', text: '그리고 초콜릿을 다시 먹어봐.' },
+    { t: 'p', text: '처음보다 더 달게 느껴져? 아니면 쌉싸름함이 강해졌어? 평소에는 몰랐던 과일향이 느껴질 수도 있어.' },
+    { t: 'p', text: '차를 먼저 마시고 초콜릿을 먹는 식으로 순서를 바꿔봐도 좋아.' },
+    { t: 'p', text: '처음이라면 카카오 함량 60~70% 정도의 다크 초콜릿으로 시작해 보는 것도 괜찮겠어. 익숙해지면 80% 이상의 진한 초콜릿에도 도전해 보고!' },
+    { t: 'p', text: '사실 차를 즐기는 데 꼭 거창한 다구나 특별한 지식이 필요한 건 아니잖아.' },
+    { t: 'p', text: '좋아하는 초콜릿 한 조각, 따뜻한 차 한 잔이면 충분해.' },
+    { t: 'p', text: '이번 주말엔 늘 마시던 커피 대신 차를 꺼내보는 건 어때? 생각보다 재미있는 조합을 발견할지도 몰라.' },
+    { t: 'close', text: 'Dear Mood — 오늘의 기분에 어울리는 한 잔.' }
+  ]
+};
+
+function journalLink(b) {
+  const p = b.productId ? PRODUCTS.find((x) => x.id === b.productId) : null;
+  return {
+    hasUrl: !!(p && p.url), noUrl: !(p && p.url), url: p && p.url ? p.url : '',
+    click: () => { if (p) track('retailer_click', { product_id: p.id, mood_id: 'journal', retailer_url: p.url }); }
+  };
+}
+
+class Component extends DCLogic {
+  currentMoodId() {
+    if (this.state.mood !== undefined) return this.state.mood;
+    const s = this.props.startMood ?? 'soft';
+    return s === 'none' ? null : s;
+  }
+  renderVals() {
+    const curId = this.currentMoodId();
+    const cur = MOODS.find((m) => m.id === curId) || null;
+    const openId = this.state.open ?? null;
+
+    const moods = MOODS.map((m) => ({
+      ...m,
+      hasImg: !!m.img,
+      noImg: !m.img,
+      alt: m.alt || '',
+      pressed: m.id === curId,
+      border: m.id === curId ? '#4A3B2E' : 'transparent',
+      pick: () => {
+        this.setState({ mood: m.id, open: null });
+        track('mood_select', { mood_id: m.id, mood_name: m.title });
+        setTimeout(() => { const el = document.getElementById('result'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
+      }
+    }));
+
+    const products = cur ? PRODUCTS.filter((p) => p.mood === cur.id).sort((a, b) => (a.order || 0) - (b.order || 0)).map((p) => {
+      const open = openId === p.id;
+      const name = p.name || p.type;
+      return {
+        ...p,
+        bg: PRODUCT_BG[p.mood],
+        brand: p.brand || '[브랜드명]',
+        name,
+        sizeText: p.size ? '(' + p.size + ')' : '',
+        priceText: p.price || '[가격 입력]',
+        caffeineText: p.caffeine || '[제품 라벨 확인 후 입력]',
+        showCaffeine: !p.hideCaffeine,
+        showAffiliate: !!(p.affiliate && p.url),
+        hasImg: !!p.img,
+        noImg: !p.img,
+        alt: p.alt || '',
+        hasUrl: !!p.url,
+        noUrl: !p.url,
+        open,
+        toggleLabel: open ? '접기' : '상세 보기',
+        toggle: () => {
+          this.setState({ open: open ? null : p.id });
+          if (!open) track('product_view', { product_id: p.id, product_name: name, mood_id: p.mood });
+        },
+        clickRetailer: () => track('retailer_click', { product_id: p.id, product_name: name, mood_id: p.mood, retailer_url: p.url })
+      };
+    }) : [];
+
+    return {
+      accent: this.props.accent ?? '#5E6E52',
+      signupUrl: SIGNUP.formUrl,
+      showLetter: SHOW_LETTER,
+      journal: { ...JOURNAL, hasImg: !!JOURNAL.img, noImg: !JOURNAL.img },
+      journalBlocks: JOURNAL.blocks.map((b) => ({ ...journalLink(b), text: b.text || '', no: b.no || '', title: b.title || '', sub: b.sub || '', isP: b.t === 'p', isItem: b.t === 'item', isTaste: b.t === 'taste', isHead: b.t === 'head', isClose: b.t === 'close', isImg: b.t === 'img', src: b.src || '', alt: b.alt || '', ratio: b.ratio || '5/4', blend: b.blend || 'normal', maxw: b.maxw || '480px' })),
+      journalNotice: JOURNAL.blocks.some((b) => { const p = b.productId && PRODUCTS.find((x) => x.id === b.productId); return !!(p && p.affiliate && p.url); }),
+      journalOpen: !!this.state.journalOpen,
+      journalBtn: this.state.journalOpen ? '이야기 닫기 ↑' : '이야기 읽기 →',
+      toggleJournal: () => {
+        const open = !this.state.journalOpen;
+        this.setState({ journalOpen: open });
+        setTimeout(() => { const el = document.getElementById(open ? 'journal-article' : 'journal'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+      },
+      moods,
+      hasMood: !!cur,
+      noMood: !cur,
+      cur: cur ? { title: cur.title, upper: cur.title.toUpperCase(), letter: cur.letter } : { title: '', upper: '', letter: '' },
+      products
+    };
+  }
+}
+</script>
+</body>
+</html>
